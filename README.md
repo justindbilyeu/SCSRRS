@@ -1,2 +1,2 @@
-# SCSSRS
-Roofing and Solar Team Repository
+# SCSRRS
+Solar Connected Storm Resistant Roofing System
