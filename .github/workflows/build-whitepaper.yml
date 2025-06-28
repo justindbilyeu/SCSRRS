@@ -1,0 +1,28 @@
+name: Build-Whitepaper
+
+on:
+  push:
+    paths:
+      - 'docs/whitepaper/**'      # only re-build when TeX sources change
+      - '.github/workflows/build-whitepaper.yml'
+
+jobs:
+  latex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install TeX Live
+        run: sudo apt-get update && sudo apt-get install -y texlive-full
+
+      - name: Compile PDF
+        run: |
+          cd docs/whitepaper
+          pdflatex -interaction=nonstopmode scssrs_whitepaper.tex
+          pdflatex -interaction=nonstopmode scssrs_whitepaper.tex  # 2× for refs
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SCSSRS_Whitepaper
+          path: docs/whitepaper/scssrs_whitepaper.pdf
